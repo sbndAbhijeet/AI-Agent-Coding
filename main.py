@@ -26,7 +26,7 @@ def agent_respond(user_query, messages):
     while True:
         try:
             res = client.chat.completions.create(
-                model='gemini-2.5-flash-preview-05-20',
+                model='gemini-2.0-flash',
                 response_format={'type': 'json_object'},
                 messages=messages,
             )
