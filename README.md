@@ -1,149 +1,160 @@
-# 🧠 Terminal-Based AI Coding Agent
+# 🧠 AI Agent Coding – Terminal + Streamlit Interface
 
-A terminal-native AI assistant specialized in **full-stack web development** using `HTML`, `CSS`, and `JavaScript`. It works through **prompt-based interaction** and performs **step-by-step execution** using shell commands to build, modify, and debug projects.
+An autonomous AI coding agent that takes natural language prompts and builds full-stack projects using **HTML, CSS, and JavaScript**, with support for terminal command execution and live debugging.
 
----
+### 🚀 Features
 
-## 🔧 Features
+* Converts natural prompts (e.g., *"Build me a todo app"*) into full code projects
+* Supports:
 
-* 🗂️ Creates complete folder/file structures.
-* ✍️ Writes HTML, CSS, and JavaScript with proper structuring and conventions.
-* 🔁 Supports iterative prompts like “Add a login page”.
-* 🛠️ Executes shell commands like `mkdir`, `touch`, `cat`, etc.
-* 📂 Scans and updates existing files intelligently.
-* 🐞 Detects and resolves common development bugs and mismatches.
-* 🔒 Handles external APIs using `.env` and JS imports when required.
-* ✅ Works entirely via `run_command` for execution.
+  * Project scaffolding
+  * Writing HTML, CSS, JS files
+  * API integrations with `.env` setup
+  * Debugging (syntax, logic, structure)
+* Modular agent reasoning via `step`: `observe`, `action`, `output`
+* Runs in:
 
----
-
-## 📌 Technologies
-
-* Terminal-based interface
-* OpenAI or Gemini API (used through function-calling)
-* JavaScript, HTML, CSS
-* Shell scripting (`run_command`)
+  * 🖥️ Terminal (interactive shell)
+  * 🌐 Streamlit web UI (with live agent thinking!)
 
 ---
 
-## 🧠 Prompt Design
+### 🗂️ Project Structure
 
-The agent follows a strict **step-based prompt protocol**:
-
-```json
-{
-  "step": "plan" | "action" | "observe" | "output",
-  "content": "Explain what it's doing",
-  "function": "run_command", // only for 'action' steps
-  "input": "Shell command to execute"
-}
+```
+AI-AGENT-CODING/
+├── main.py                 # Main agent runtime logic (no Streamlit dependencies)
+├── streamlit_app.py        # Live web interface using Streamlit
+├── prompts/
+│   └── html_css_js.txt     # System prompt logic
+├── .env                    # Environment vars (e.g., API key)
+└── README.md               # You're reading this
 ```
 
-The agent always:
+---
 
-* Observes → Plans → Acts → Waits for results → Repeats.
+### ⚙️ Setup Instructions
 
-### 🛠️ Debugging Strategy
+#### 1. Clone & Install Requirements
 
-If errors occur:
+```bash
+git clone https://github.com/your-repo/AI-AGENT-CODING.git
+cd AI-AGENT-CODING
+pip install openai streamlit python-dotenv
+```
 
-* Scans HTML/CSS/JS files.
-* Validates class/id consistency.
-* Checks syntax and function logic.
-* Auto-corrects common issues like:
+#### 2. Setup `.env`
 
-  * Wrong heredoc syntax (`cat > file <<EOF` → `cat <<EOF > file`)
-  * Unconnected JS event listeners
-  * Missing element references
+Create a `.env` file with your API key:
+
+```env
+GEMINI_API_KEY=your_gemini_or_openai_key
+```
+
+> Uses Google's **Gemini 2.0** via compatible OpenAI client call.
 
 ---
 
-## 🚀 Sample Flow
+### 💻 Running the Agent
 
-### User Query:
+#### Terminal Mode (no GUI):
 
-> Build me a Todo Website using HTML, CSS, JS
+```bash
+python main.py
+```
 
-### Agent Output:
+Enter your request like:
+
+```bash
+> Build me a blog website using HTML, CSS, and JS.
+```
+
+---
+
+### 🌐 Web UI (Streamlit) – With Live Agent Thinking
+
+```bash
+streamlit run streamlit_app.py
+```
+
+#### Web Features:
+
+* Input your request via text box
+* Watch live agent steps (observe, plan, act)
+* Visual card updates of each action
+* Final summary of task completed
+
+---
+
+### 🛠 Example Prompts to Try
+
+* `Build a todo app with create, edit, delete`
+* `Create a responsive blog site`
+* `Build a calculator UI in HTML/CSS/JS`
+* `Make a GitHub profile finder (ask for API)`
+* `Create stopwatch timer web app`
+* `Weather app (asks for and imports API)`
+* `Build a minimal ecommerce site layout`
+
+---
+
+### 🧪 Debugging Built-in
+
+The agent can:
+
+* Scan for missing/mismatched class or ID names
+* Fix common syntax issues
+* Ensure logical correctness in JS
+* Suggest and repair DOM-event mismatches
+* Re-run faulty commands automatically
+
+You can extend more debugging strategies in the prompt file.
+
+---
+
+### 📦 Example Agent Output Format
 
 ```json
 {
   "step": "action",
-  "content": "Creating the project folder",
   "function": "run_command",
-  "input": "mkdir todo-app"
-}
-```
-
-... and continues step-by-step to create files like:
-
-* `index.html`
-* `style.css`
-* `script.js`
-
-Finishes with:
-
-```json
-{
-  "step": "output",
-  "content": "Your Website has been built 👷🏻 Run it 🏃🏻 and ask for debugging 🛠️"
+  "input": "cat > todo-app/index.html <<EOF\n ... \nEOF",
+  "content": "Creating index.html with structure..."
 }
 ```
 
 ---
 
-## 🛠️ Heredoc Fix Automation
+### ✅ Requirements
 
-When the agent writes JS using heredocs, errors may occur. A fix is applied using:
-    
-Issues fix:
-    
-    cat <<EOF > note-app/script.js
-    // Your JS code here
-    EOF"
-    
+* Python 3.8+
+* Streamlit
+* OpenAI Client
+* dotenv
 
-This corrects heredoc order to avoid syntax issues in `script.js` creation.
+Install all with:
 
----
+```bash
+pip install -r requirements.txt
+```
 
-## 📁 Examples Included
-
-* ✅ Todo App
-* ✅ Calculator
-* ✅ Weather App (API-based)
-* ✅ GitHub Profile Viewer (API-based)
-* ✅ E-commerce Frontend
-* ✅ Stopwatch/Timer
-* 🐛 Debugging examples for syntax, logic, event mismatches
+*(Or manually as shown earlier)*
 
 ---
 
-## 🧪 How to Use
+### 🧠 Want to Extend?
 
-1. Prompt the agent using natural language.
-2. Agent responds with step-by-step JSON objects.
-3. A shell runner reads the `input` and executes it.
-4. Output is observed and fed back into the next prompt.
+You can plug in more tools like:
 
----
+* `scan_html_structure`
+* `auto_debug_script`
+* `render_web_preview` (via iframe)
+* `file_structure_visualizer` (for Streamlit)
 
-## 📌 Roadmap
-
-* [ ] Support for additional stacks (React, Node, etc.)
-* [ ] Integrated testing and linting support
-* [ ] File previews and CLI file explorer
+Ask for help if you want to implement them.
 
 ---
 
-## 🧠 Inspired by
+### 🧾 License
 
-* GPT/Gemini Function Calling
-* Dev CLI workflows
-* AutoGPT architectural principles
-
----
-
-## 📄 License
-
-MIT — Feel free to use and adapt this AI workflow for personal or commercial use.
+MIT – free to use, extend, and remix.
