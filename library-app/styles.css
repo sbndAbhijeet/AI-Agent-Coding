@@ -1,0 +1,270 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.input-form {
+    margin-bottom: 30px;
+    display: flex;
+    gap: 10px;
+}
+
+.input-form input {
+    flex: 1;
+    padding: 12px;
+    margin: 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.input-form button {
+    width: auto;
+    padding: 12px 20px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.input-form button:hover {
+    background-color: #219653;
+}
+
+.book-list {
+    overflow-x: auto;
+}
+
+#book-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#book-table th,
+#book-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#book-table th {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#book-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#book-table tbody tr:hover {
+    background-color: #ecf0f1;
+}
+
+#book-table .edit-btn,
+#book-table .delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#book-table .edit-btn {
+    background-color: #f39c12;
+}
+
+#book-table .edit-btn:hover {
+    background-color: #e67e22;
+}
+
+#book-table .delete-btn:hover {
+    background-color: #c0392b;
+}
+
+#search-input {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.add-book-link, .back-link {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.add-book-link:hover, .back-link:hover {
+    background-color: #2980b9;
+}
+
+/* Styles for review page */
+.review-form {
+    margin-bottom: 30px;
+}
+
+.review-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #777;
+}
+
+.review-form input[type="text"],
+.review-form textarea {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.review-form textarea {
+    resize: vertical;
+}
+
+.review-form button {
+    width: auto;
+    padding: 12px 20px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.review-form button:hover {
+    background-color: #219653;
+}
+
+.reviews-list h2 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.reviews-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.reviews-list ul li {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .input-form {
+        flex-direction: column;
+    }
+
+    .input-form input {
+        width: 100%;
+    }
+
+    .input-form button {
+        width: 100%;
+    }
+}
+#book-table .save-btn {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#book-table .save-btn:hover {
+    background-color: #27ae60;
+}
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+}
+
+label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+input[type="text"], input[type="number"], textarea {
+    width: 300px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
