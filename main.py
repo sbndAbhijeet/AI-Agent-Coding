@@ -1,39 +1,32 @@
 from openai import OpenAI
-import os, json, time, requests
+import os, json
 from dotenv import load_dotenv
 
 load_dotenv()
 
-
-
-def run_command(cmd: str):
-   res = os.system(cmd)
-   return res
-
-available_tools = {
-    "run_command": run_command
-}
 client = OpenAI(
-    api_key = os.getenv('GEMINI_API_KEY'),
-    base_url= "https://generativelanguage.googleapis.com/v1beta/openai/"
+    api_key=os.getenv('GEMINI_API_KEY'),
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 )
 
-
 with open('prompts/html_css_js.txt', 'r') as f:
-   SYSTEM_PROMPT = f.read()
+    SYSTEM_PROMPT = f.read()
 
-messages = [
-  {'role': 'system', 'content': SYSTEM_PROMPT}
-]
+available_tools = {
+    "run_command": lambda cmd: os.system(cmd)
+}
 
-while True:
-    query = input('> ')
-    messages.append({'role': 'user', 'content': query})
+def agent_respond(user_query, messages):
+    """
+    Pass user_query and current messages list.
+    Returns (response_content_str, updated_messages_list).
+    """
+    messages.append({'role': 'user', 'content': user_query})
 
     while True:
         try:
             res = client.chat.completions.create(
-                model='gemini-2.0-flash',
+                model='gemini-2.5-flash-preview-05-20',
                 response_format={'type': 'json_object'},
                 messages=messages,
             )
@@ -44,37 +37,40 @@ while True:
             try:
                 json_res = json.loads(response_content)
             except json.JSONDecodeError as e:
-                print("⚠️ Failed to parse JSON response:", e)
-                print("Raw Response: ", response_content)
-                break
+                # Return raw response and messages if JSON parse fails
+                return (f"⚠️ Failed to parse JSON: {e}\nRaw Response:\n{response_content}", messages)
 
             step = json_res.get('step')
             content = json_res.get('content', '')
 
             if step == 'plan':
-                print(f"       ✍🏻: {content}\n")
+                # Just continue to next iteration to get next message
                 continue
             elif step == 'observe':
-                print(f"       🧐: {content}\n")
                 continue
             elif step == 'action':
-                print(f"       🧑‍🏭: {content}\n")
                 tool_name = json_res.get('function', '')
                 tool_input = json_res.get('input', '')
 
-                print(f"🛠️... Calling tool: {tool_name} with input {tool_input}")
-
-                if available_tools.get(tool_name) != False:
+                if tool_name in available_tools:
                     output = available_tools[tool_name](tool_input)
                     content = json.dumps({'step': 'observe', 'output': output})
-                    messages.append({'role': 'user', 
-                    'content': content})
+                    messages.append({'role': 'user', 'content': content})
                     continue
+                else:
+                    return (f"⚠️ Tool {tool_name} not available.", messages)
             elif step == 'output':
-                print(f"🤖: {content}\n\n")
-                break
-            
+                return (content, messages)
 
         except Exception as e:
-            print("🔥 Error during completion request:", e)
-            break
+            return (f"🔥 Error during completion request: {e}", messages)
+
+
+if __name__ == "__main__":
+    # If you want to test directly in terminal
+    messages = [{'role': 'system', 'content': SYSTEM_PROMPT}]
+
+    while True:
+        user_query = input("> ")
+        response, messages = agent_respond(user_query, messages)
+        print(response)

@@ -1,10 +1,21 @@
+# Virtual environments
+.venv/
+venv/
 
-.venv
+# Python cache
+__pycache__/
+*.pyc
 
+# System files
+*.DS_Store
+*.log
+
+# Specific ignored files
 stuff.txt
 
+# Ignore specific prompts
 prompts/bolt.txt
 prompts/Bootstrap_Django.txt
 prompts/Nextjs.txt
 prompts/React_Express.txt
-prompts/v0_bolt.txt
+prompts/v0_bot.txt
